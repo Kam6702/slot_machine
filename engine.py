@@ -7,8 +7,10 @@ class player(object):
         self.bankroll = int(bankroll)
         self.initial_bankroll = int(bankroll)
 
+
 def spin():
     return (random.choice(config.symbols), random.choice(config.symbols), random.choice(config.symbols))
+
 
 def calculate_winnings(spin_results, bet):
     try:
@@ -30,4 +32,10 @@ def place_bet(player, bet):
         place_bet(player, input('Please enter a valid bet: '))
 
 
-debug = player(100)
+def pay_winnings(player, winnings):
+    player.bankroll += winnings
+
+
+def create_new_player(player_name):
+    player_name = player(100)
+    return player_name
