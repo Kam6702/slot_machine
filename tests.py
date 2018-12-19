@@ -1,7 +1,8 @@
 import engine
 import unittest
 import config
-import odds
+import probability
+import mock
 
 
 class TestSuite(unittest.TestCase):
@@ -41,8 +42,24 @@ class TestSuite(unittest.TestCase):
         assert player_created
         del debug
 
+
     def test_individual_symbol_probability(self):
-        assert odds.individual_symbol_probability(2) == 0.5
+        assert probability.individual_symbol_probability(2) == 0.5
+
+    def test_probability_of_multiplier_exact(self):
+        win_conditions = {
+            ('X', 'X', 'X'): 1000.0,
+        }
+        symbols = ['X', 'Y']
+        assert probability.probability_of_multiplier(win_conditions, symbols, 1000.0) == 0.125
+
+    def test_probability_of_multiplier_not_exact(self):
+        win_conditions = {
+            ('1', '1', '1'): 10.0,
+            ('2', '2', '2'): 1000.0
+        }
+        symbols = ['1', '2']
+        assert probability.probability_of_multiplier(win_conditions, symbols, 5.0, exact_match=False) == 0.25
 
     def tearDown(self):
         del self.player
