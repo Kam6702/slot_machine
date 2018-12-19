@@ -1,6 +1,7 @@
 import engine
 import unittest
 import config
+import odds
 
 
 class TestSuite(unittest.TestCase):
@@ -39,6 +40,9 @@ class TestSuite(unittest.TestCase):
             player_created = False
         assert player_created
         del debug
+
+    def test_individual_symbol_probability(self):
+        assert odds.individual_symbol_probability(2) == 0.5
 
     def tearDown(self):
         del self.player
