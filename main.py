@@ -3,10 +3,7 @@ import config
 
 
 def spin():
-    spin_results = []
-    for i in range(3):
-        spin_results.append(random.choice(config.symbols))
-    return spin_results
+    return (random.choice(config.symbols), random.choice(config.symbols), random.choice(config.symbols))
 
 
 def calculate_winnings(spin_results, bet):
@@ -15,3 +12,4 @@ def calculate_winnings(spin_results, bet):
         return multiplier * bet
     except KeyError:
         return 0
+
