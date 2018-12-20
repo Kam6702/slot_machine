@@ -7,7 +7,7 @@ import mock
 
 class TestSuite(unittest.TestCase):
     def setUp(self):
-        self.player = engine.player(100)
+        self.player = engine.player(100, 'debug')
 
     def test_spin(self):
         a, b, c = engine.spin()
@@ -76,6 +76,12 @@ class TestSuite(unittest.TestCase):
         }
         symbols = ['1', '2']
         assert probability.probability_of_loss(win_conditions, symbols, total_loss=False) == 0.875
+
+    def test_load_save_game(self):
+        self.player.bankroll = engine.load_bankroll(self.player)
+        assert self.player.bankroll == 50
+
+    # TODO add test for save game
 
     def tearDown(self):
         del self.player

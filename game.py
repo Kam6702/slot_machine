@@ -5,10 +5,13 @@ import time
 def start_menu():
     print('Create New Player: N \nUse Existing Player: E')
     command = input('Enter a command: ').upper()
-    if command == 'N':
-        player = engine.create_new_player(input('Enter a name for your player: '))
-    elif command == 'E':
-        pass  # TODO Add save game feature
+    player = engine.create_new_player(input('Enter a name for your player: '))
+    if command == 'E':
+        try:
+            player.bankroll = engine.load_bankroll(player)
+        except FileNotFoundError:
+            print('This player does not exist')
+            start_menu()
     return player
 
 
@@ -31,3 +34,5 @@ while active_game == True:
         print(spin_results)
         print('You\'ve won {} credits.'.format(winnings))
         engine.pay_winnings(active_player, winnings)
+
+engine.save_bankroll(active_player)

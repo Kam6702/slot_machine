@@ -1,11 +1,13 @@
 import random
 import config
-
+import pickle
+import os
 
 class player(object):
-    def __init__(self, bankroll):
+    def __init__(self, bankroll, name):
         self.bankroll = int(bankroll)
         self.initial_bankroll = int(bankroll)
+        self.name = name
 
 
 def spin():
@@ -37,5 +39,17 @@ def pay_winnings(player, winnings):
 
 
 def create_new_player(player_name):
-    player_name = player(100)
-    return player_name
+    new_player = player(100, player_name)
+    return new_player
+
+
+def save_bankroll(player_object):
+    file = player_object.name + '.dat'  # TODO Create a saved games directory
+    with open(file, 'wb') as save_game:
+        pickle.dump(player_object.bankroll, save_game)
+
+
+def load_bankroll(player_object):
+    file = player_object.name + '.dat'
+    with open(file, 'rb') as load_game:
+        return pickle.load(load_game)
