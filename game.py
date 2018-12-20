@@ -28,7 +28,6 @@ while active_game == True:
     else:
         engine.place_bet(active_player, command)
         print('Spinning...')
-        time.sleep(3)
         spin_results = engine.spin()
         winnings = engine.calculate_winnings(spin_results, command)
         print(spin_results)

@@ -13,11 +13,8 @@ class TestSuite(unittest.TestCase):
         a, b, c = engine.spin()
         assert a in config.symbols and b in config.symbols and c in config.symbols
 
-    def test_win_conditions(self):
-        assert config.win_conditions[('BAR', 'BAR', 'BAR')] == 5.0
-
     def test_calculate_winnings_win(self):
-        assert engine.calculate_winnings(('BAR', 'BAR', 'BAR'), 2) == 10.0
+        assert engine.calculate_winnings(('BAR', 'BAR', 'BAR'), 2) == config.win_conditions[('BAR', 'BAR', 'BAR')] * 2
 
     def test_calculate_winnings_lost(self):
         assert engine.calculate_winnings(('BAR', 'BAR', '7'), 2) == 0
