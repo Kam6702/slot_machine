@@ -61,5 +61,21 @@ class TestSuite(unittest.TestCase):
         symbols = ['1', '2']
         assert probability.probability_of_multiplier(win_conditions, symbols, 5.0, exact_match=False) == 0.25
 
+    def test_probability_of_loss_total_loss(self):
+        win_conditions = {
+            ('1', '1', '1'): 0.5,
+            ('2', '2', '2'): 2
+        }
+        symbols = ['1', '2']
+        assert probability.probability_of_loss(win_conditions, symbols) == 0.75
+
+    def test_probability_of_loss_not_total_loss(self):
+        win_conditions = {
+            ('1', '1', '1'): 0.5,
+            ('2', '2', '2'): 2
+        }
+        symbols = ['1', '2']
+        assert probability.probability_of_loss(win_conditions, symbols, total_loss=False) == 0.875
+
     def tearDown(self):
         del self.player
