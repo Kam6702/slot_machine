@@ -2,6 +2,7 @@ import engine
 import unittest
 import config
 import probability
+import simulator
 import mock
 
 
@@ -69,7 +70,7 @@ class TestSuite(unittest.TestCase):
     def test_probability_of_loss_not_total_loss(self):
         win_conditions = {
             ('1', '1', '1'): 0.5,
-            ('2', '2', '2'): 2
+            ('2', '2', '2'): 2.0
         }
         symbols = ['1', '2']
         assert probability.probability_of_loss(win_conditions, symbols, total_loss=False) == 0.875
@@ -79,6 +80,27 @@ class TestSuite(unittest.TestCase):
         assert self.player.bankroll == 50
 
     # TODO add test for save game
+
+    def test_probability_of_all_multipliers(self):
+        win_conditions = {
+            ('1', '1', '1'): 0.5,
+            ('2', '2', '2'): 2.0
+        }
+        symbols = ['1', '2']
+        expected_result = {0.5: .125, 2.0: .125, 0.0: 0.75}
+        assert probability.probability_of_all_multipliers(win_conditions, symbols) == expected_result
+
+    def test_expected_payout_of_trial(self):
+        probabilities_of_all_multipliers = {2.0: 0.4, 0.0: 0.6}
+        bet = 10
+        spins_per_trial = 10
+        assert probability.expected_payout_of_trial(probabilities_of_all_multipliers, bet, spins_per_trial) == 80
+
+    def test_expected_profit_of_trial(self):
+        expected_payout_of_trial = 80
+        bet = 10
+        spins_per_trial = 10
+        assert probability.expected_profit_of_trial(expected_payout_of_trial, bet, spins_per_trial) == -20
 
     def tearDown(self):
         del self.player
